@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "314727097590",
+    "firebase_url": "https://doodlzapp-default-rtdb.firebaseio.com",
+    "project_id": "doodlzapp",
+    "storage_bucket": "doodlzapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:314727097590:android:023cb5c82699fe193878d7",
+        "android_client_info": {
+          "package_name": "com.android.application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "314727097590-4kgpn2ie3cad8q7g6sdf7gj8hl25i881.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDW9PKGf2SItZUZcEJiqEXOpwaiMiBu5Ls"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "314727097590-4kgpn2ie3cad8q7g6sdf7gj8hl25i881.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
