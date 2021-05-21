@@ -20,6 +20,22 @@ public class PaintView extends View {
     public PaintView(Context context) {
         super(context);
 
+
+
+
+        //init();
+    }
+
+
+
+
+
+
+
+
+
+
+    /*private void init(){
         brush.setAntiAlias(true);
         brush.setColor(Color.BLUE);
         brush.setStyle(Paint.Style.STROKE);
@@ -50,5 +66,5 @@ public class PaintView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawPath(path, brush);
-    }
+    }*/
 }
