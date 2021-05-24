@@ -35,16 +35,28 @@
        android:orientation="vertical"
        android:visibility="gone"
        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <View
+            android:id="@+id/colorDemo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="right"
+            android:layout_marginRight="20dp"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="Apply color"
+            android:textColor="@color/black"
+            android:textSize="10dp"
+            android:backgroundTint="@color/white"
+            android:layout_gravity="right"
+            />
 
-       <View
-           android:id="@+id/colorSreen"
-           android:layout_column="1"
-           android:layout_row="0"
-           android:layout_width="30dp"
-           android:layout_height="30dp"
-           android:layout_gravity="right"
-           android:background="@drawable/custom_button"
-           android:layout_marginRight="20dp"/>
+    </LinearLayout>
+
 
        <LinearLayout
            android:layout_width="match_parent"

@@ -66,18 +66,18 @@ public class PaintView extends View {
                 pathList.add(path);
                 colorList.add(current_brush);
                 sizeList.add(current_size);
-                invalidate();
+                //invalidate();
                 return true;
             case MotionEvent.ACTION_MOVE:
                 path.lineTo(pointX, pointY);
                 pathList.add(path);
                 colorList.add(current_brush);
                 sizeList.add(current_size);
-                invalidate();
+                //invalidate();
                 break;
             default: return false;
         }
-        //postInvalidate();
+        postInvalidate();
         return false;
     }
 

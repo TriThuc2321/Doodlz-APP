@@ -14,9 +14,6 @@
         android:title=""
         android:icon="@drawable/eraser"
         />
-    <item android:id="@+id/color_lens_item"
-        android:title=""
-        android:icon="@drawable/ic_baseline_color_lens_24"
-        />
+
 
 </menu>
