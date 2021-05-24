@@ -122,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
                         mColorLens.setVisibility(View.GONE);
                         seekBarSize.setVisibility(View.GONE);
                         setCurrentSize(8f);
+                        setCurrentBrush(colorSave);
                         break;
                     case R.id.brush_item:
                         seekBarSize.setVisibility(View.VISIBLE);
