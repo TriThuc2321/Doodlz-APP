@@ -285,3 +285,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
+
+color = Color.argb(alphaSeekBar.getProgress(),
+        redSeekBar.getProgress(), greenSeekBar.getProgress(),
+        blueSeekBar.getProgress());
