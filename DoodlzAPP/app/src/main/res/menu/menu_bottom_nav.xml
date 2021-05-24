@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<item android:id="@+id/brush"
-    android:title=""
-    android:icon="@drawable/ic_baseline_brush_24"
+    <item android:id="@+id/pencil_item"
+        android:title=""
+        android:icon="@drawable/pencil"
+        />
+    <item android:id="@+id/brush_item"
+        android:title=""
+        android:icon="@drawable/ic_baseline_brush_24"
     />
-    <item android:id="@+id/eraser"
+    <item android:id="@+id/eraser_item"
         android:title=""
         android:icon="@drawable/eraser"
         />
-    <item android:id="@+id/color_lens"
+    <item android:id="@+id/color_lens_item"
         android:title=""
         android:icon="@drawable/ic_baseline_color_lens_24"
         />
+    <!--<item android:id="@+id/reset_item"
+        android:title=""
+        android:icon="@drawable/reset"
+        />-->
 </menu>

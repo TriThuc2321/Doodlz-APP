@@ -8,13 +8,25 @@
     android:orientation="vertical"
     android:weightSum="10">
 
-    <!--<RelativeLayout
+    <RelativeLayout
+        android:id="@+id/display"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottom_nav">
+        android:layout_above="@+id/bottom_nav"
+        android:layout_below="@+id/topAppBar">
 
         <include layout="@layout/view_paint"/>
-    </RelativeLayout>-->
+    </RelativeLayout>
+
+    <SeekBar
+        android:id="@+id/seek_bar_size"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:visibility="gone"
+        android:layout_above="@+id/bottom_nav"/>
+
 
     <LinearLayout
         android:id="@+id/color_lens"
@@ -32,7 +44,18 @@
             android:backgroundTint="@color/red"
             android:layout_gravity="center"
             android:layout_marginRight="10dp"
-            />
+            android:onClick="redColor"
+            tools:ignore="OnClick" />
+        <View
+            android:id="@+id/greenBrush"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/custom_button"
+            android:backgroundTint="@color/green"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:onClick="greenColor"
+            tools:ignore="OnClick" />
         <View
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -40,6 +63,8 @@
             android:backgroundTint="@color/yellow"
             android:layout_gravity="center"
             android:layout_marginRight="10dp"
+            android:onClick="yellowColor"
+            tools:ignore="OnClick"
             />
         <View
             android:layout_width="40dp"
@@ -48,9 +73,42 @@
             android:backgroundTint="@color/blue"
             android:layout_gravity="center"
             android:layout_marginRight="10dp"
+            android:onClick="blueColor"
+            tools:ignore="OnClick"
+            />
+        <View
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/custom_button"
+            android:backgroundTint="@color/brown"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:onClick="brownColor"
+            tools:ignore="OnClick"
+            />
+        <View
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/custom_button"
+            android:backgroundTint="@color/black"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:onClick="blackColor"
+            tools:ignore="OnClick"
             />
 
     </LinearLayout>
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/topAppBar"
+        android:layout_width="match_parent"
+        android:background="@color/teal_700"
+        android:layout_height="?attr/actionBarSize"
+        app:menu="@menu/appbar_top"
+        app:navigationIcon="@drawable/iconapppaint"
+        app:title="App Paint"
+        style="@style/Widget.MaterialComponents.Toolbar.Primary"
+        />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
