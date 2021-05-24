@@ -122,7 +122,7 @@
         android:layout_height="?attr/actionBarSize"
         app:menu="@menu/appbar_top"
         app:navigationIcon="@drawable/iconapppaint"
-        app:title="App Paint"
+        app:title="Doodlz"
         style="@style/Widget.MaterialComponents.Toolbar.Primary"
         />
 
