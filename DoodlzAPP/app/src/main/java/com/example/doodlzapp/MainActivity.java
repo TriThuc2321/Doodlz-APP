@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -52,9 +53,16 @@ public class MainActivity extends AppCompatActivity {
     public ProgressDialog pd;
     private BottomNavigationView mNavigationView;
     public MaterialToolbar mAppBarTop;
-    private LinearLayout mColorLens;
+    private GridLayout mColorLens;
     private SeekBar seekBarSize;
     private int colorSave = Color.BLACK;
+
+    private SeekBar alphaSeekBar;
+    private SeekBar greenSeekBar;
+    private SeekBar redSeekBar;
+    private SeekBar blueSeekBar;
+
+    private View colorSreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +77,11 @@ public class MainActivity extends AppCompatActivity {
         pathList.clear();
         sizeList.clear();
         path.reset();
+
+        greenSeekBar.setProgress(0);
+        redSeekBar.setProgress(0);
+        alphaSeekBar.setProgress(0);
+        blueSeekBar.setProgress(0);
     }
 
     public void setCurrentBrush(int c){
@@ -84,6 +97,19 @@ public class MainActivity extends AppCompatActivity {
         mNavigationView = findViewById(R.id.bottom_nav);
         mColorLens = findViewById(R.id.color_lens);
         seekBarSize = findViewById(R.id.seek_bar_size);
+
+        redSeekBar = findViewById(R.id.redSeekbar);
+        greenSeekBar = findViewById(R.id.greenSeekbar);
+        blueSeekBar = findViewById(R.id.blueSeekbar);
+        alphaSeekBar = findViewById(R.id.alphaSeekbar);
+
+        redSeekBar.setOnSeekBarChangeListener(colorChangedListener);
+        blueSeekBar.setOnSeekBarChangeListener(colorChangedListener);
+        greenSeekBar.setOnSeekBarChangeListener(colorChangedListener);
+        alphaSeekBar.setOnSeekBarChangeListener(colorChangedListener);
+
+        colorSreen = findViewById(R.id.colorSreen);
+
         pd = new ProgressDialog(MainActivity.this);
 
         mAppBarTop.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -91,6 +117,9 @@ public class MainActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 if(item.getItemId() == R.id.save){
                     save();
+                }
+                else if(item.getItemId() == R.id.reset_item){
+                    reset();
                 }
                 return true;
             }
@@ -150,61 +179,34 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-    }
 
 
-//set color
-    public void redColor(View v){
-        paint_brush.setColor(Color.parseColor("#E61717"));
-
-        setCurrentBrush(paint_brush.getColor());
-    }
-    public void yellowColor(View v){
-        colorSave = Color.parseColor("#EAD522");
-        paint_brush.setColor(Color.parseColor("#EAD522"));
-        setCurrentBrush(paint_brush.getColor());
-    }
-    public void blueColor(View v){
-        colorSave = Color.parseColor("#244DE3");
-        paint_brush.setColor(Color.parseColor("#244DE3"));
-        setCurrentBrush(paint_brush.getColor());
-    }
-    public void greenColor(View v){
-        colorSave = Color.parseColor("#2BE633");
-        paint_brush.setColor(Color.parseColor("#2BE633"));
-        setCurrentBrush(paint_brush.getColor());
-    }
-    public void blackColor(View v){
-        colorSave = Color.parseColor("#FF000000");
-        paint_brush.setColor(Color.parseColor("#FF000000"));
-        setCurrentBrush(paint_brush.getColor());
-    }
-    public void brownColor(View v){
-        colorSave = Color.parseColor("#320606");
-        paint_brush.setColor(Color.parseColor("#320606"));
-        setCurrentBrush(paint_brush.getColor());
     }
 
-    ////////////////
+    private SeekBar.OnSeekBarChangeListener colorChangedListener = new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            int color = Color.argb(alphaSeekBar.getProgress(),
+                                    redSeekBar.getProgress(),
+                                    greenSeekBar.getProgress(),
+                                    blueSeekBar.getProgress());
 
-    public static Bitmap setViewToBitmapImage(View view) {
-        //Define a bitmap with the same size as the view
-        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
-        //Bind a canvas to it
-        Canvas canvas = new Canvas(returnedBitmap);
-        //Get the view's background
-        Drawable bgDrawable = view.getBackground();
-        if (bgDrawable != null)
-            //has background drawable, then draw it on the canvas
-            bgDrawable.draw(canvas);
-        else
-            //does not have background drawable, then draw white background on the canvas
-            canvas.drawColor(Color.WHITE);
-        // draw the view on the canvas
-        view.draw(canvas);
-        //return the bitmap
-        return returnedBitmap;
-    }
+            paint_brush.setColor(color);
+            setCurrentBrush(paint_brush.getColor());
+            colorSave = color;
+            colorSreen.setBackgroundColor(color);
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
+        }
+    };
 
     private void save(){
         pd.setMessage("saving your image");
@@ -221,8 +223,6 @@ public class MainActivity extends AppCompatActivity {
             Log.i("TAG", "Oops! Image could not be saved.");
         }
     }
-
-
 
     private File saveBitMap(Context context, View drawView){
                 File pictureFileDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"PaintApp");
@@ -284,8 +284,7 @@ public class MainActivity extends AppCompatActivity {
             Log.i("TAG", "There was an issue scanning gallery.");
         }
     }
+
 }
 
-color = Color.argb(alphaSeekBar.getProgress(),
-        redSeekBar.getProgress(), greenSeekBar.getProgress(),
-        blueSeekBar.getProgress());
+
