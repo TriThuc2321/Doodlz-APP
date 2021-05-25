@@ -1,11 +1,16 @@
 package com.example.doodlzapp;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -14,10 +19,13 @@ import android.graphics.Path;
 import android.graphics.drawable.Drawable;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.renderscript.Sampler;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,8 +44,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 import static com.example.doodlzapp.PaintView.colorList;
@@ -46,9 +57,11 @@ import static com.example.doodlzapp.PaintView.current_size;
 import static com.example.doodlzapp.PaintView.pathList;
 import static com.example.doodlzapp.PaintView.sizeList;
 
+
 public class MainActivity extends AppCompatActivity {
 
-    //public static android.graphics.Path path = new android.graphics.Path();
+    private static final int SAVE_IMAGE_PERMISSION_REQUEST_CODE = 1;
+    RelativeLayout content;
     public static Paint paint_brush = new Paint();
     public static Path path = new Path();
 
@@ -85,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
         path = new Path();
     }
     void init(){
+        content = findViewById(R.id.display);
+
         mAppBarTop = findViewById(R.id.topAppBar);
         mNavigationView = findViewById(R.id.bottom_nav);
         mColorLens = findViewById(R.id.color_lens);
@@ -93,10 +108,11 @@ public class MainActivity extends AppCompatActivity {
         pd = new ProgressDialog(MainActivity.this);
 
         mAppBarTop.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if(item.getItemId() == R.id.save){
-                    save();
+                        requestStorage();
                 }
                 else if(item.getItemId() == R.id.reset_item){
                     reset();
@@ -156,6 +172,55 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    void requestStorage(){
+        if (ContextCompat.checkSelfPermission(MainActivity.this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(MainActivity.this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        SAVE_IMAGE_PERMISSION_REQUEST_CODE);
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+        else {
+            save();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case SAVE_IMAGE_PERMISSION_REQUEST_CODE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    save();
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+
+
     private void save(){
         pd.setMessage("saving your image");
         pd.show();
@@ -172,8 +237,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     private File saveBitMap(Context context, View drawView){
-                File pictureFileDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"PaintApp");
+        File pictureFileDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"PaintApp");
 
         if (!pictureFileDir.exists()) {
             boolean isDirectoryCreated = pictureFileDir.mkdirs();
@@ -200,6 +266,7 @@ public class MainActivity extends AppCompatActivity {
         scanGallery( context,pictureFile.getAbsolutePath());
         return pictureFile;
     }
+
 
     private Bitmap getBitmapFromView(View view) {
         //Define a bitmap with the same size as the view

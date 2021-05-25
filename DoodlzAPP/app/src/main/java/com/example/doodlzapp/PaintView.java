@@ -92,36 +92,5 @@ public class PaintView extends View {
         }
     }
 
-/*private void init(){
-        brush.setAntiAlias(true);
-        brush.setColor(Color.BLUE);
-        brush.setStyle(Paint.Style.STROKE);
-        brush.setStrokeJoin(Paint.Join.ROUND);
-        brush.setStrokeWidth(8f);
 
-        params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        float pointX = event.getX();
-        float pointY = event.getY();
-
-        switch (event.getAction()){
-            case MotionEvent.ACTION_DOWN:
-                path.moveTo(pointX,pointY);
-                return true;
-            case MotionEvent.ACTION_MOVE:
-                path.lineTo(pointX, pointY);
-                break;
-            default: return false;
-        }
-        postInvalidate();
-        return false;
-    }
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-        canvas.drawPath(path, brush);
-    }*/
 }
